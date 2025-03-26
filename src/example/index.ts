@@ -17,8 +17,6 @@ import { faker } from "@faker-js/faker";
 import readline from "readline";
 import MqttService from "./mqtt.js";
 
-let card: DisplayDevice = null;
-
 // function askQuestion(query: string): Promise<string> {
 //   const rl = readline.createInterface({
 //     input: process.stdin,
@@ -69,12 +67,26 @@ let card: DisplayDevice = null;
 // };
 
 async function main() {
+  let card: DisplayDevice = null;
   if (card) {
     await card.deinit();
   }
 
   // Add thông tin vào đây
   card = new DisplayDevice("192.168.2.255", 10001);
+
+  try {
+    await card.init();
+  } catch (e) {
+    logger.error(e);
+    process.exit(-1);
+  }
+
+  card.on("uploadProgress", (p) => {
+    process.stdout.clearLine(0);
+    process.stdout.cursorTo(0);
+    process.stdout.write(`Progress: ${p}\r`);
+  });
 
   const mqttService = new MqttService(
     "mqtt://45.252.249.222:1883",
@@ -88,7 +100,12 @@ async function main() {
     "led",
     new TextComponent(0, 0, 192, 16, 255, "Fixed_9x18B", "Hello world")
   );
-  card.addProgram(program);
+
+  try {
+    await card.addProgram(program);
+  } catch (e) {
+    logger.error(e.toString());
+  }
 
   client.on("message", (topic, message) => {
     const data = JSON.parse(message.toString());
