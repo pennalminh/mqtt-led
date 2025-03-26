@@ -94,6 +94,11 @@ async function main() {
   );
 
   const client = mqttService.getClient();
+
+  card.on("connectionStateChange", async (state) => {
+    logger.info("Connection state change: " + state);
+  });
+
   const program = new Program();
 
   program.addComponent(
@@ -102,15 +107,28 @@ async function main() {
   );
 
   try {
-    await card.addProgram(program);
+    try {
+      await card.addProgram(program);
+    } catch (error) {
+      if (error.message.includes("BUSY")) {
+        logger.error(`Error: ${error.message} - Retry operation`);
+        setTimeout(async () => {
+          try {
+            await card.addProgram(program);
+          } catch (retryError) {
+            logger.error(`Retry failed: ${retryError}`);
+          }
+        }, 5000);
+      } else {
+        throw error;
+      }
+    }
   } catch (e) {
     logger.error(e.toString());
   }
 
   client.on("message", (topic, message) => {
     const data = JSON.parse(message.toString());
-    console.log(data);
-    console.log(data["text"]);
 
     (program.components["led"] as TextComponent).setText(data["text"]);
     (program.components["led"] as TextComponent).setBlingSymbol();
