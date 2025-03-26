@@ -101,10 +101,17 @@ async function main() {
 
   const program = new Program();
 
-  program.addComponent(
-    "led",
-    new TextComponent(0, 0, 192, 16, 255, "Fixed_9x18B", "Hello world")
+  const component = new TextComponent(
+    0,
+    0,
+    96,
+    32,
+    255,
+    "Fixed_9x18B",
+    "Hello world"
   );
+
+  program.addComponent("led", component);
 
   try {
     try {
@@ -131,9 +138,9 @@ async function main() {
     const data = JSON.parse(message.toString());
 
     (program.components["led"] as TextComponent).setText(data["text"]);
-    (program.components["led"] as TextComponent).setBlingSymbol();
-    (program.components["led"] as TextComponent).setColor("#F9D62E");
-    (program.components["led"] as TextComponent).setJustify("left");
+    // (program.components["led"] as TextComponent).setBlingSymbol();
+    // (program.components["led"] as TextComponent).setColor("#F9D62E");
+    // (program.components["led"] as TextComponent).setJustify("left");
     card.updateProgram(program);
   });
   // if (!devicesList.length) {
