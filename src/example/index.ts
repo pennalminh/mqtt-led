@@ -73,8 +73,7 @@ async function main() {
   }
 
   // Add thông tin vào đây
-  card = new DisplayDevice("192.168.2.255", 10001);
-
+  card = new DisplayDevice("192.168.150.254", 10001);
   try {
     await card.init();
   } catch (e) {
@@ -108,7 +107,7 @@ async function main() {
     32,
     255,
     "Fixed_9x18B",
-    "Hello world"
+    "Hello world this is a test"
   );
 
   program.addComponent("led", component);
@@ -134,14 +133,18 @@ async function main() {
     logger.error(e.toString());
   }
 
-  client.on("message", (topic, message) => {
+  client.on("message", async (topic, message) => {
     const data = JSON.parse(message.toString());
 
-    (program.components["led"] as TextComponent).setText(data["text"]);
+    (program.components["led"] as TextComponent).setText(
+      data["text"].toString()
+    );
     // (program.components["led"] as TextComponent).setBlingSymbol();
-    // (program.components["led"] as TextComponent).setColor("#F9D62E");
+    // (program.components["led"] as TextComponent).setColor(
+    //   data["color"].toString()
+    // );
     // (program.components["led"] as TextComponent).setJustify("left");
-    card.updateProgram(program);
+    await card.updateProgram(program);
   });
   // if (!devicesList.length) {
   //   console.error("No device found!");

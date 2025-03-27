@@ -4,7 +4,7 @@ class TextComponent extends BaseComponent {
   readonly type = "text";
 
   font: string;
-  text: string;
+  text: string = "";
 
   private singleLine = false;
   private effectIn = 0;
@@ -34,7 +34,7 @@ class TextComponent extends BaseComponent {
 
   setSlidingText = (state: boolean) => {
     if (state) {
-      this.effectIn = 26;
+      this.effectIn = 5;
       this.text = this.text + "       ";
     } else {
       this.effectIn = 0;
@@ -50,14 +50,32 @@ class TextComponent extends BaseComponent {
     this.color = color;
   };
 
-  setText = (text: string) => {
-    this.text = text;
+  setText = (input: string | Uint8Array | Buffer) => {
+    // Convert potential UTF-8 input to proper string
+    try {
+      let processedText: string;
+      // If text is already a Buffer or Uint8Array, decode it
+      if (input instanceof Uint8Array || Buffer.isBuffer(input)) {
+        const decoder = new TextDecoder("utf-8");
+        processedText = decoder.decode(input);
+      } else {
+        // Handle string input - ensure it's properly encoded
+        processedText = decodeURIComponent(escape(input));
+      }
 
-    const fontWidth = 9;
-    if (text.length >= this.width / fontWidth - 1) {
-      this.setSlidingText(true);
-    } else {
-      this.setSlidingText(false);
+      this.text = processedText;
+
+      const fontWidth = 9;
+      // Calculate length considering multi-byte characters
+      // const charCount = [...text].length;
+      // if (charCount >= this.width / fontWidth - 1) {
+      //   this.setSlidingText(true);
+      // } else {
+      //   this.setSlidingText(false);
+      // }
+    } catch (e) {
+      console.error("Error processing UTF-8 text:", e);
+      this.text = typeof input === "string" ? input : ""; // Fallback to empty string for non-string inputs
     }
   };
 
@@ -109,7 +127,7 @@ class TextComponent extends BaseComponent {
             "@_italic": false,
             "@_bold": false,
             "@_underline": false,
-            "@_size": this.height,
+            "@_size": 12,
             "@_color": this.color,
           },
 
