@@ -89,62 +89,91 @@ async function main() {
 
   const mqttService = new MqttService(
     "mqtt://45.252.249.222:1883",
-    "test/topic"
+    "led/CW001"
   );
 
   const client = mqttService.getClient();
-
-  card.on("connectionStateChange", async (state) => {
-    logger.info("Connection state change: " + state);
-  });
-
   const program = new Program();
 
-  const component = new TextComponent(
-    0,
-    0,
-    96,
-    32,
-    255,
-    "Fixed_9x18B",
-    "Hello world this is a test"
+  program.addComponent(
+    "led",
+    new TextComponent(0, 0, 192, 16, 255, "Fixed_9x18B", "Hello world")
   );
+  
+  card.addProgram(program);
 
-  program.addComponent("led", component);
-
-  try {
-    try {
-      await card.addProgram(program);
-    } catch (error) {
-      if (error.message.includes("BUSY")) {
-        logger.error(`Error: ${error.message} - Retry operation`);
-        setTimeout(async () => {
-          try {
-            await card.addProgram(program);
-          } catch (retryError) {
-            logger.error(`Retry failed: ${retryError}`);
-          }
-        }, 5000);
-      } else {
-        throw error;
-      }
-    }
-  } catch (e) {
-    logger.error(e.toString());
-  }
-
-  client.on("message", async (topic, message) => {
+  client.on("message", (topic, message) => {
     const data = JSON.parse(message.toString());
 
-    (program.components["led"] as TextComponent).setText(
-      data["text"].toString()
+    let obj = {
+      text: "",
+      color: "",
+      justify: "left",
+      blingSymbol: "",
+    };
+
+    switch (data["status"]) {
+      case "1":
+        obj.text = "Xe vào trong trạm";
+        obj.color = "#ffff00";
+        obj.blingSymbol = "↑";
+        break;
+      case "2":
+        obj.text = "Lùi vào trạm";
+        obj.color = "#ffff00";
+        obj.blingSymbol = "↑";
+        break;
+      case "3":
+        obj.text = "Lùi lại chậm";
+        obj.color = "#ffff00";
+        obj.blingSymbol = "↑";
+        break;
+      case "4":
+        obj.text = "Tiến lên chậm";
+        obj.color = "#ff0000";
+        obj.blingSymbol = "↓";
+        break;
+      case "5":
+        obj.text = "Dừng lại";
+        obj.color = "#7df300";
+        obj.blingSymbol = "X";
+        break;
+      case "6":
+        obj.text = "Đỗ xe hoàn tất, nhấn Xác nhận và bắt đầu rửa";
+        obj.color = "#7df300";
+        obj.blingSymbol = "X";
+        break;
+      case "7":
+        obj.text = "Đang rửa";
+        obj.color = "#7df300";
+        obj.blingSymbol = "";
+        break;
+      case "8":
+        obj.text = "Hoàn thành √";
+        obj.color = "#7df300";
+        obj.blingSymbol = "";
+        break;
+      case "9":
+        obj.text = "Xe ra ngoài trạm";
+        obj.color = "#ffff00";
+        obj.blingSymbol = "↓";
+        break;
+      case "10":
+        obj.text = "Xe ra ngoài trạm";
+        obj.color = "#ff0000";
+        obj.blingSymbol = "↓";
+        break;
+      default:
+        console.log("Invalid option. Please select a number between 1 and 10.");
+    }
+
+    (program.components["led"] as TextComponent).setText(obj.text);
+    (program.components["led"] as TextComponent).setBlingSymbol(
+      obj.blingSymbol
     );
-    // (program.components["led"] as TextComponent).setBlingSymbol();
-    // (program.components["led"] as TextComponent).setColor(
-    //   data["color"].toString()
-    // );
-    // (program.components["led"] as TextComponent).setJustify("left");
-    await card.updateProgram(program);
+    (program.components["led"] as TextComponent).setColor(obj.color);
+    (program.components["led"] as TextComponent).setJustify(obj.justify);
+    card.updateProgram(program);
   });
   // if (!devicesList.length) {
   //   console.error("No device found!");
