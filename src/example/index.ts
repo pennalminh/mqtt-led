@@ -73,7 +73,7 @@ async function main() {
   }
 
   // Add thông tin vào đây
-  card = new DisplayDevice("192.168.150.254", 10001);
+  card = new DisplayDevice("192.168.6.1", 10001);
   try {
     await card.init();
   } catch (e) {
@@ -97,10 +97,29 @@ async function main() {
 
   program.addComponent(
     "led",
-    new TextComponent(0, 0, 192, 16, 255, "Fixed_9x18B", "Hello world")
+    new TextComponent(0, 0, 96, 32, 255, "Fixed_9x18B", "Hello world")
   );
-  
-  card.addProgram(program);
+
+  try {
+    try {
+      await card.addProgram(program);
+    } catch (error) {
+      if (error.message.includes("BUSY")) {
+        logger.error(`Error: ${error.message} - Retry operation`);
+        setTimeout(async () => {
+          try {
+            await card.addProgram(program);
+          } catch (retryError) {
+            logger.error(`Retry failed: ${retryError}`);
+          }
+        }, 5000);
+      } else {
+        throw error;
+      }
+    }
+  } catch (e) {
+    logger.error(e.toString());
+  }
 
   client.on("message", (topic, message) => {
     const data = JSON.parse(message.toString());
