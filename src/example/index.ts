@@ -133,54 +133,44 @@ async function main() {
 
     switch (data["status"]) {
       case "1":
-        obj.text = "Xe vào trong trạm";
+        obj.text = "MỜI VÀO";
         obj.color = "#ffff00";
-        obj.blingSymbol = "↑";
         break;
       case "2":
-        obj.text = "Lùi vào trạm";
+        obj.text = "↓ LÙI";
         obj.color = "#ffff00";
-        obj.blingSymbol = "↑";
         break;
       case "3":
-        obj.text = "Lùi lại chậm";
+        obj.text = " ↓ LÙI";
         obj.color = "#ffff00";
-        obj.blingSymbol = "↑";
         break;
       case "4":
-        obj.text = "Tiến lên chậm";
+        obj.text = "↑ TIẾN";
         obj.color = "#ff0000";
-        obj.blingSymbol = "↓";
         break;
       case "5":
-        obj.text = "Dừng lại";
+        obj.text = "Dừng X";
         obj.color = "#7df300";
-        obj.blingSymbol = "X";
         break;
       case "6":
-        obj.text = "Đỗ xe hoàn tất, nhấn Xác nhận và bắt đầu rửa";
+        obj.text = "XÁC NHẬN RỬA";
         obj.color = "#7df300";
-        obj.blingSymbol = "X";
         break;
       case "7":
-        obj.text = "Đang rửa";
+        obj.text = "ĐANG RỬA";
         obj.color = "#7df300";
-        obj.blingSymbol = "";
         break;
       case "8":
-        obj.text = "Hoàn thành √";
+        obj.text = "HOÀN THÀNH √";
         obj.color = "#7df300";
-        obj.blingSymbol = "";
         break;
       case "9":
-        obj.text = "Xe ra ngoài trạm";
+        obj.text = "↑ MỜI RA";
         obj.color = "#ffff00";
-        obj.blingSymbol = "↓";
         break;
       case "10":
-        obj.text = "Xe ra ngoài trạm";
+        obj.text = "↑ MỜI RA";
         obj.color = "#ff0000";
-        obj.blingSymbol = "↓";
         break;
       default:
         console.log("Invalid option. Please select a number between 1 and 10.");

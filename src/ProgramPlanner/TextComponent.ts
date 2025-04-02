@@ -8,7 +8,7 @@ class TextComponent extends BaseComponent {
 
   private singleLine = false;
   private effectIn = 0;
-  private justify = "left";
+  private justify = "center";
   private color = "#FFFFFF";
 
   constructor(
@@ -127,7 +127,7 @@ class TextComponent extends BaseComponent {
             "@_italic": false,
             "@_bold": false,
             "@_underline": false,
-            "@_size": 12,
+            "@_size": 16,
             "@_color": this.color,
           },
 
