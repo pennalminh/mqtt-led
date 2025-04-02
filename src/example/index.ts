@@ -166,7 +166,7 @@ async function main() {
       case "7":
         obj.text = "ĐANG RỬA";
         obj.color = "#7df300";
-        obj.size = 18;
+        obj.size = 16;
         break;
       case "8":
         obj.text = "ĐÃ XONG √";
