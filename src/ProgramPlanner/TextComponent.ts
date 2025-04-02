@@ -10,6 +10,7 @@ class TextComponent extends BaseComponent {
   private effectIn = 0;
   private justify = "center";
   private color = "#FFFFFF";
+  private size = 16;
 
   constructor(
     x: number,
@@ -48,6 +49,10 @@ class TextComponent extends BaseComponent {
 
   setColor = (color: string) => {
     this.color = color;
+  };
+
+  setSizeText = (size: number) => {
+    this.size = size;
   };
 
   setText = (input: string | Uint8Array | Buffer) => {
@@ -127,7 +132,7 @@ class TextComponent extends BaseComponent {
             "@_italic": false,
             "@_bold": false,
             "@_underline": false,
-            "@_size": 16,
+            "@_size": this.size,
             "@_color": this.color,
           },
 
