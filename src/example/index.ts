@@ -136,7 +136,7 @@ async function main() {
       case "1":
         obj.text = "MỜI VÀO";
         obj.color = "#ffff00";
-        obj.size = 22;
+        obj.size = 20;
         break;
       case "2":
         obj.text = "↓ LÙI";
@@ -161,17 +161,17 @@ async function main() {
       case "6":
         obj.text = "XÁC NHẬN RỬA";
         obj.color = "#7df300";
-        obj.size = 22;
+        obj.size = 18;
         break;
       case "7":
         obj.text = "ĐANG RỬA";
         obj.color = "#7df300";
-        obj.size = 22;
+        obj.size = 20;
         break;
       case "8":
         obj.text = "ĐÃ XONG √";
         obj.color = "#7df300";
-        obj.size = 22;
+        obj.size = 18;
         break;
       case "9":
         obj.text = "MỜI RA";
