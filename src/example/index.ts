@@ -153,7 +153,7 @@ async function main() {
         obj.size = 22;
         break;
       case "5":
-        obj.text = "Dừng X";
+        obj.text = "X DỪNG";
         obj.color = "#7df300";
         obj.size = 22;
         break;
