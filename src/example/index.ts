@@ -89,7 +89,7 @@ async function main() {
 
   const mqttService = new MqttService(
     "mqtt://45.252.249.222:1883",
-    "led/CW001"
+    "cw/led/CW001"
   );
 
   const client = mqttService.getClient();
@@ -127,7 +127,7 @@ async function main() {
     let obj = {
       text: "",
       color: "",
-      justify: "left",
+      justify: "center",
       blingSymbol: "",
     };
 
@@ -141,7 +141,7 @@ async function main() {
         obj.color = "#ffff00";
         break;
       case "3":
-        obj.text = " ↓ LÙI";
+        obj.text = "↓ LÙI";
         obj.color = "#ffff00";
         break;
       case "4":
@@ -161,7 +161,7 @@ async function main() {
         obj.color = "#7df300";
         break;
       case "8":
-        obj.text = "HOÀN THÀNH √";
+        obj.text = "ĐÃ XONG √";
         obj.color = "#7df300";
         break;
       case "9":
