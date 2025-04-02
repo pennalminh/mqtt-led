@@ -172,10 +172,12 @@ async function main() {
       case "9":
         obj.text = "↑ MỜI RA";
         obj.color = "#ffff00";
+        obj.size = 20;
         break;
       case "10":
         obj.text = "↑ MỜI RA";
         obj.color = "#ff0000";
+        obj.size = 20;
         break;
       default:
         console.log("Invalid option. Please select a number between 1 and 10.");
