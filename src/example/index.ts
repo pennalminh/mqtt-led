@@ -187,6 +187,7 @@ async function main() {
     );
     (program.components["led"] as TextComponent).setColor(obj.color);
     (program.components["led"] as TextComponent).setJustify(obj.justify);
+    (program.components["led"] as TextComponent).setSizeText(obj.size);
     card.updateProgram(program);
   });
   // if (!devicesList.length) {
