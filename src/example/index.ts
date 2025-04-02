@@ -140,22 +140,22 @@ async function main() {
       case "2":
         obj.text = "↓ LÙI";
         obj.color = "#ffff00";
-        obj.size = 18;
+        obj.size = 20;
         break;
       case "3":
         obj.text = "↓ LÙI";
         obj.color = "#ffff00";
-        obj.size = 18;
+        obj.size = 20;
         break;
       case "4":
         obj.text = "↑ TIẾN";
         obj.color = "#ff0000";
-        obj.size = 18;
+        obj.size = 20;
         break;
       case "5":
         obj.text = "Dừng X";
         obj.color = "#7df300";
-        obj.size = 18;
+        obj.size = 20;
         break;
       case "6":
         obj.text = "XÁC NHẬN RỬA";
