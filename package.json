@@ -13,7 +13,8 @@
   "author": "KryQ <b@rubble.com> (https://www.kryq.me)",
   "license": "BSD 3-Clause License",
   "dependencies": {
-    "@types/node": "^16.11.10",
+    "@types/node": "^25.5.0",
+    "dotenv": "^17.3.1",
     "fast-xml-parser": "^4.0.1",
     "logging": "^3.3.0",
     "winston": "^3.3.3",
@@ -27,6 +28,7 @@
     "@typescript-eslint/parser": "^5.9.1",
     "blessed": "^0.1.81",
     "chalk": "^5.0.0",
-    "eslint": "^8.6.0"
+    "eslint": "^8.6.0",
+    "typescript": "^5.9.3"
   }
 }

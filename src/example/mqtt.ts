@@ -8,7 +8,10 @@ class MqttService {
   constructor(brokerUrl: string, topic: string) {
     this.brokerUrl = brokerUrl;
     this.topic = topic;
-    this.client = mqtt.connect(this.brokerUrl);
+    this.client = mqtt.connect(this.brokerUrl, {
+      username: process.env.MQTT_USERNAME,
+      password: process.env.MQTT_PASSWORD,
+    });
 
     this.initialize();
   }

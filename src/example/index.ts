@@ -1,20 +1,14 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 /* eslint-disable no-case-declarations */
 /* eslint-disable indent */
 import logger from "../utils/logger.js";
-import {
-  DisplayCommunicator,
-  CandidateDevice,
-} from "../DisplayCommunicator.js";
 import DisplayDevice from "../DisplayDevice.js";
 
 import { Program } from "../ProgramPlanner/Program.js";
 import TextComponent from "../ProgramPlanner/TextComponent.js";
-import ImageComponent from "../ProgramPlanner/ImageComponent.js";
-import VideoComponent from "../ProgramPlanner/VideoComponent.js";
-import ParkingSpacesComponent from "../ProgramPlanner/ParkingSpacesComponent.js";
-import { faker } from "@faker-js/faker";
 
-import readline from "readline";
 import MqttService from "./mqtt.js";
 
 async function main() {
@@ -38,9 +32,13 @@ async function main() {
     process.stdout.write(`Progress: ${p}\r`);
   });
 
+  console.log(process.env.MQTT_BROKER_URL);
+  console.log(process.env.MQTT_TOPIC);
+  
+
   const mqttService = new MqttService(
-    "mqtt://45.252.249.222:1883",
-    "cw/led/CW001"
+    process.env.MQTT_BROKER_URL,
+    process.env.MQTT_TOPIC
   );
 
   const client = mqttService.getClient();
